@@ -1,0 +1,123 @@
+WindowManager:
+    MainWindow:
+    SecondWindow:
+
+
+<LabBut@ButtonBehavior+Label>:
+
+<ButImg@ButtonBehavior+AsyncImage>:
+    canvas:
+        Color:
+            rgb: (0, 0, 0)
+        Rectangle:
+            texture: self.texture
+            size: self.width + 20, self.height + 20
+            pos: self.x - 10, self.y - 10
+
+
+<MainWindow>:
+    name: "main"
+
+    FloatLayout
+        canvas.before:
+            Color:
+                rgba: 1, 245/255, 238/255, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            canvas.before:
+                Color:
+                    rgba: 0.93, 75/255, 50/255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            size_hint: 1, 0.1
+            pos_hint: {'top': 1}
+            halign: 'left'
+            valign: 'middle'
+            text:'RecipeMaster'
+            text_size: self.size
+            padding: 10, 10
+            font_size: 22
+            bold: True
+
+
+        Button:
+            text: "RecipeMaster"
+            size_hint: .25, .25
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_release:
+                app.root.current = "second"
+                root.manager.transition.direction = 'left'
+
+
+        Button:
+            background_normal: ''
+            background_color: [250/255, 235/255, 24/255, 1]
+            pos_hint: {'x': 0.9, 'y': 0.1}
+            size_hint: 0.1, 0.1
+            text: '+'
+            font_size: 30
+            bold: True
+
+
+
+<SecondWindow>:
+    name: "second"
+
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 1, 245/255, 238/255, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        LabBut:
+            canvas.before:
+                Color:
+                    rgba: 0.93, 75/255, 50/255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            size_hint: 1, 0.1
+            pos_hint: {'x': 0.075, 'top': 1}
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+            text:'Recipe!'
+            padding_x: 10
+            font_size: 22
+            bold: True
+
+
+        LabBut:
+            canvas.before:
+                Color:
+                    rgba: 0.93, 75/255, 50/255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            text: '<-'
+            font_size: 30
+            bold: True
+            size_hint: 0.075, 0.1
+            pos_hint: {'x': 0, 'top': 1}
+            on_press:
+                self.opacity = 0.75
+            on_release:
+                self.opacity = 1
+                app.root.current = "main"
+                root.manager.transition.direction = 'right'
+
+        Button:
+            background_normal: ''
+            background_color: [250/255, 235/255, 24/255, 1]
+            pos_hint: {'x': 0.9, 'y': 0.1}
+            size_hint: 0.1, 0.1
+            text: '+'
+            font_size: 30
+            bold: True
