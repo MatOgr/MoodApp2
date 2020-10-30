@@ -1,8 +1,3 @@
-WindowManager:
-    MainWindow:
-    SecondWindow:
-
-
 <LabBut@ButtonBehavior+Label>:
 
 <ButImg@ButtonBehavior+AsyncImage>:
@@ -14,9 +9,25 @@ WindowManager:
             size: self.width + 20, self.height + 20
             pos: self.x - 10, self.y - 10
 
+<CircularButton@Button>:
+    background_color: (0,0,0,0)
+    back_color: (1,0,1,1)
+    border_radius: [360]
+    canvas.before:
+        Color:
+            rgb: self.back_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+
 
 <MainWindow>:
     name: "main"
+    MyLoader:
+        id: img_loader
+
 
     FloatLayout
         canvas.before:
@@ -44,20 +55,24 @@ WindowManager:
             bold: True
 
 
-        Button:
+        CircularButton:
             text: "RecipeMaster"
             size_hint: .25, .25
+            back_color: (0.157, 0.455, 0.753, 1.0)
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_press:
+                self.back_color = (0.157, 0.6, 0.8, 0.75)
             on_release:
+                self.back_color: (0.157, 0.455, 0.753, 1.0)
                 app.root.current = "second"
                 root.manager.transition.direction = 'left'
 
 
-        Button:
+        CircularButton:
             background_normal: ''
-            background_color: [250/255, 235/255, 24/255, 1]
-            pos_hint: {'x': 0.9, 'y': 0.1}
-            size_hint: 0.1, 0.1
+            back_color: [250/255, 235/255, 34/255, 1]
+            pos_hint: {'center_x': 0.85, 'center_y': 0.1}
+            size_hint: 0.15, 0.15*9/16
             text: '+'
             font_size: 30
             bold: True
@@ -67,6 +82,7 @@ WindowManager:
 <SecondWindow>:
     name: "second"
 
+
     FloatLayout:
         canvas.before:
             Color:
@@ -74,8 +90,29 @@ WindowManager:
             Rectangle:
                 pos: self.pos
                 size: self.size
+        MyLoader:
+            id: recipe_loader
 
         LabBut:
+            canvas.before:
+                Color:
+                    rgba: 0.93, 75/255, 50/255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            text: ' <- '
+            font_size: 30
+            bold: True
+            size_hint: 0.2, 0.1
+            pos_hint: {'x': 0, 'top': 1}
+            on_press:
+                self.opacity = 0.75
+            on_release:
+                self.opacity = 1
+                app.root.current = "main"
+                root.manager.transition.direction = 'right'
+        Label:
+            id: window_title
             canvas.before:
                 Color:
                     rgba: 0.93, 75/255, 50/255, 1
@@ -84,35 +121,107 @@ WindowManager:
                     size: self.size
 
             size_hint: 1, 0.1
-            pos_hint: {'x': 0.075, 'top': 1}
+            pos_hint: {'x': 0.2, 'top': 1}
             halign: 'left'
             valign: 'middle'
             text_size: self.size
-            text:'Recipe!'
+            text: str(recipe_loader.loader.get_data_content('title') + 'Recipe!')
             padding_x: 10
             font_size: 22
             bold: True
 
-
-        LabBut:
+        Label:
+            id: description_title
+            size_hint: 1, 0.075
+            pos_hint: {'top': 0.9}
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+            color: (0, 0, 0, 0.5)
+            text: str(recipe_loader.loader.get_data_content('title'))
+            font_size: 14
+            padding_x: 30
+            bold: True
+        Label:
+            id: description_txt
+            pos_hint: {'top': 0.825}
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+            color: (0, 0, 0, 0.35)
+            text: str(recipe_loader.loader.get_data_content('description'))
+            font_size: 12
+            padding: 50, 10
+        Label:
+            id: ingredients
             canvas.before:
                 Color:
-                    rgba: 0.93, 75/255, 50/255, 1
+                    rgba: 0, 1, 0, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
-            text: '<-'
-            font_size: 30
+            size_hint: 1, 0.1
+            pos_hint: {'top': 0.6}
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+            color: (0, 0, 0, 0.5)
+            text: 'Ingredients'
+            font_size: 14
+            padding: 20, 10
             bold: True
-            size_hint: 0.075, 0.1
-            pos_hint: {'x': 0, 'top': 1}
-            on_press:
-                self.opacity = 0.75
-            on_release:
-                self.opacity = 1
-                app.root.current = "main"
-                root.manager.transition.direction = 'right'
-
+        Label:
+            id: ingredients_txt
+            canvas.before:
+                Color:
+                    rgba: 0, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint: 1, 0.25
+            pos_hint: {'top': 0.65}
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+            color: (0, 0, 0, 0.35)
+            text: recipe_loader.loader.get_from_list('ingredients', '-')
+            font_size: 12
+            padding: 40, 10
+        Label:
+            id: preparing
+            canvas.before:
+                Color:
+                    rgba: 1, 0, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint: 1, 0.1
+            pos_hint: {'top': 0.25}
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+            color: (0, 0, 0, 0.5)
+            text: 'Preparing'
+            font_size: 14
+            padding: 20, 10
+            bold: True
+        Label:
+            id: ingredients_txt
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint: 1, 0.25
+            pos_hint: {'top': 0.6}
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+            color: (0, 0, 0, 0.35)
+            text: str(recipe_loader.loader.get_data_content('preparing'))
+            font_size: 12
+            padding: 40, 10
         Button:
             background_normal: ''
             background_color: [250/255, 235/255, 24/255, 1]
@@ -121,3 +230,10 @@ WindowManager:
             text: '+'
             font_size: 30
             bold: True
+
+
+WindowManager:
+    MainWindow:
+    SecondWindow:
+
+
