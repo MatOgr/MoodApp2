@@ -22,7 +22,6 @@
             radius: self.border_radius
 
 
-
 <MainWindow>:
     name: "main"
     MyLoader:
@@ -36,6 +35,8 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
+
+
         Label:
             canvas.before:
                 Color:
@@ -143,90 +144,69 @@
             padding_x: 30
             bold: True
         Label:
-            id: description_txt
-            pos_hint: {'top': 0.825}
-            halign: 'left'
-            valign: 'middle'
-            text_size: self.size
-            color: (0, 0, 0, 0.35)
-            text: str(recipe_loader.loader.get_data_content('description'))
-            font_size: 12
-            padding: 50, 10
-        Label:
             id: ingredients
-            canvas.before:
-                Color:
-                    rgba: 0, 1, 0, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-            size_hint: 1, 0.1
-            pos_hint: {'top': 0.6}
+            size_hint: 1, 0.075
+            pos_hint: {'top': 0.64}
             halign: 'left'
             valign: 'middle'
             text_size: self.size
             color: (0, 0, 0, 0.5)
             text: 'Ingredients'
             font_size: 14
-            padding: 20, 10
+            padding_x: 30
             bold: True
         Label:
-            id: ingredients_txt
-            canvas.before:
-                Color:
-                    rgba: 0, 1, 1, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-            size_hint: 1, 0.25
-            pos_hint: {'top': 0.65}
-            halign: 'left'
-            valign: 'middle'
-            text_size: self.size
-            color: (0, 0, 0, 0.35)
-            text: recipe_loader.loader.get_from_list('ingredients', '-')
-            font_size: 12
-            padding: 40, 10
-        Label:
             id: preparing
-            canvas.before:
-                Color:
-                    rgba: 1, 0, 1, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-            size_hint: 1, 0.1
-            pos_hint: {'top': 0.25}
+            size_hint: 1, 0.075
+            pos_hint: {'top': 0.372}
             halign: 'left'
             valign: 'middle'
             text_size: self.size
             color: (0, 0, 0, 0.5)
             text: 'Preparing'
-            font_size: 14
-            padding: 20, 10
+            font_size: 13
+            padding_x: 40
             bold: True
+
         Label:
-            id: ingredients_txt
-            canvas.before:
-                Color:
-                    rgba: 0, 0, 0, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-            size_hint: 1, 0.25
-            pos_hint: {'top': 0.6}
+            id: description_txt
+            size_hint: 1, 0.225
+            pos_hint: {'top': 0.825}
             halign: 'left'
-            valign: 'middle'
+            valign: 'top'
             text_size: self.size
             color: (0, 0, 0, 0.35)
-            text: str(recipe_loader.loader.get_data_content('preparing'))
-            font_size: 12
-            padding: 40, 10
-        Button:
+            text: str(recipe_loader.loader.get_data_content('description'))
+            font_size: 13
+            padding_x: 50
+        Label:
+            id: ingredients_txt
+            size_hint: 1, 0.25
+            pos_hint: {'top': 0.59}
+            halign: 'left'
+            valign: 'top'
+            text_size: self.size
+            color: (0, 0, 0, 0.35)
+            text: recipe_loader.loader.get_from_list('ingredients', '-')
+            font_size: 13
+            padding: 50, 10
+        Label:
+            id: preparing_txt
+            size_hint: 1, 0.3
+            pos_hint: {'top': 0.3}
+            halign: 'left'
+            valign: 'top'
+            text_size: self.size
+            color: (0, 0, 0, 0.35)
+            text: str(recipe_loader.loader.get_from_list('preparing'))
+            font_size: 13
+            padding_x: 50
+
+        CircularButton:
             background_normal: ''
-            background_color: [250/255, 235/255, 24/255, 1]
-            pos_hint: {'x': 0.9, 'y': 0.1}
-            size_hint: 0.1, 0.1
+            back_color: [250/255, 235/255, 34/255, 1]
+            pos_hint: {'center_x': 0.85, 'center_y': 0.1}
+            size_hint: 0.15, 0.15*9/16
             text: '+'
             font_size: 30
             bold: True
