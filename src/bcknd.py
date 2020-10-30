@@ -1,6 +1,8 @@
 import urllib3 as url3
 import json
 import shutil
+from PIL import Image
+from io import BytesIO
 
 
 class Loader:
@@ -22,6 +24,11 @@ class Loader:
 
     def get_data_key(self, nr):
         return self.site_data.keys()[nr]
+
+    def get_image(self, nr):
+        address = self.site_data['imgs'][nr]
+        resp = self.manager.request('GET', address)
+        return Image.open(BytesIO(resp.data))
 
     def get_from_list(self, what, point=None):
         s = self.site_data[what]

@@ -6,7 +6,8 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from src.bcknd import Loader
 from kivy.config import Config
-from kivy.core.window import Window
+from kivy.uix.image import AsyncImage
+
 Config.set('graphics', 'resizable', True)
 
 

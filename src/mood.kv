@@ -1,17 +1,19 @@
 <LabBut@ButtonBehavior+Label>:
 
-<ButImg@ButtonBehavior+AsyncImage>:
+<ButImg@ButtonBehavior+Image>:
+    border_radius: [360]
     canvas:
         Color:
-            rgb: (0, 0, 0)
-        Rectangle:
+            rgba: (0, 0, 0, 0)
+        RoundedRectangle:
             texture: self.texture
-            size: self.width + 20, self.height + 20
-            pos: self.x - 10, self.y - 10
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
 
 <CircularButton@Button>:
     background_color: (0,0,0,0)
-    back_color: (1,0,1,1)
+    back_color: (1,0,1,0)
     border_radius: [360]
     canvas.before:
         Color:
@@ -36,7 +38,6 @@
                 pos: self.pos
                 size: self.size
 
-
         Label:
             canvas.before:
                 Color:
@@ -55,17 +56,37 @@
             font_size: 22
             bold: True
 
-
-        CircularButton:
-            text: "RecipeMaster"
-            size_hint: .25, .25
-            back_color: (0.157, 0.455, 0.753, 1.0)
+        ButImg:
+            id: guzik
+            color: (1,1,1,0.6)
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            background_normal: ''
+            source: './res/get_recipe.jpg'
+            size_hint: 0.6, 0.6
             on_press:
-                self.back_color = (0.157, 0.6, 0.8, 0.75)
+                self.color = (1, 1, 1, 0.5)
+                guzik_lab.opacity = 0.7
             on_release:
-                self.back_color: (0.157, 0.455, 0.753, 1.0)
-                app.root.current = "second"
+                self.color = (1, 1, 1, 0.6)
+                guzik_lab.opacity = 1
+                app.root.current = 'second'
+                root.manager.transition.direction = 'left'
+
+        LabBut:
+            id: guzik_lab
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            size_hint: 0.5, 0.1
+            text: 'RecipeMaster!'
+            bold: True
+            font_size: 26
+            color: (0.465,0.465,0.465,1)
+            on_press:
+                self.opacity = 0.7
+                guzik.color = (1, 1, 1, 0.5)
+            on_release:
+                self.opacity = 1
+                guzik.color = (1, 1, 1, 0.6)
+                app.root.current = 'second'
                 root.manager.transition.direction = 'left'
 
 
@@ -77,6 +98,11 @@
             text: '+'
             font_size: 30
             bold: True
+            on_press:
+                self.back_color = (230/255, 220/255, 34/255, 1)
+            on_release:
+                self.back_color: (250/255, 235/255, 34/255, 1)
+                root.manager.transition.direction = 'left'
 
 
 
