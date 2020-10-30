@@ -14,10 +14,6 @@ Config.set('graphics', 'resizable', True)
 class MyLoader(Widget):
     url = 'https://moodup.team/test/info.php'
     loader = Loader(url)
-    # title = ObjectProperty(loader.get_data_content('title'))
-    # recipe = ObjectProperty(loader.get_data_content('description'))
-    # ingredients = ObjectProperty(loader.get_data_content('ingredients'))
-    # preparing = ObjectProperty(loader.get_data_content('preparing'))
 
     def show_recipe(self):
         self.recipe.text = str(self.loader.site_data['description'])
