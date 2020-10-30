@@ -23,9 +23,11 @@ class Loader:
     def get_data_key(self, nr):
         return self.site_data.keys()[nr]
 
-    def get_from_list(self, what, point):
+    def get_from_list(self, what, point=None):
         s = self.site_data[what]
-        return '\n'.join(['- %s' % x for x in s])
+        if point is None:
+            return ''.join(['%s ' % x for x in s])
+        return '\n'.join(['%s %s' % (point, x) for x in s])
 
     # TODO
     def show_picture(self, nr):
