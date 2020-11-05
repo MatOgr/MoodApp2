@@ -1,0 +1,187 @@
+ScreenManager:
+    RecipeScreen:
+    MenuScreen:
+
+<ButImg@ButtonBehavior+Image>:  
+<LabBut@ButtonBehavior+Label>:  
+<MenuScreen>:
+    name: 'menu'
+    
+    BoxLayout:
+        orientation: 'vertical'
+        MDToolbar:
+            id: toolbar
+            title: 'RecipeMaster' 
+            md_bg_color: app.theme_cls.primary_color
+            background_palette: 'Primary'
+            elevation: 10
+
+         
+        FloatLayout:
+            
+            ButImg:
+                id: guzik
+                color: (1,1,1,0.5)
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                background_normal: ''
+                source: './res/0.png'
+                size_hint: 0.7, 0.7
+                on_press:
+                    self.color = (1, 1, 1, 0.4)
+                    guzik_lab.opacity = 0.7
+                on_release:
+                    self.color = (1, 1, 1, 0.5)
+                    guzik_lab.opacity = 1
+                    app.root.current = 'second'
+                    root.manager.transition.direction = 'left'
+            LabBut:
+                id: guzik_lab
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size_hint: 0.5, 0.1
+                text: 'RecipeMaster!'
+                bold: True
+                font_size: 26
+                color: (0.165,0.165,0.165,0.95)
+                on_press:
+                    self.opacity = 0.8
+                    guzik.color = (1, 1, 1, 0.4)
+                on_release:
+                    self.opacity = 1
+                    guzik.color = (1, 1, 1, 0.5)
+                    app.root.current = 'second'
+                    root.manager.transition.direction = 'left'  
+            
+            MDFloatingActionButtonSpeedDial:
+                rotation_root_button: True
+                data: app.data
+                bg_color_root_button: [250/255, 190/255, 34/255, 1]
+                bg_color_stack_button: [250/255, 190/255, 34/255, 1]
+                text_color: (1, 1, 1, 1)
+                pos_hint: {'center_x': 0.85, 'center_y': 0.1} 
+           
+           
+<RecipeScreen>:
+    name: 'second'            
+    MyLoader: 
+        id: recipe_loader
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        MDToolbar:
+            id: toolbar
+            title: 'RecipeMaster' 
+            md_bg_color: app.theme_cls.primary_color
+            background_palette: 'Primary'
+            elevation: 10
+            left_action_items: [['arrow-left', lambda x: None]]
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            GridLayout:
+                id: box
+                cols: 1
+                spacing: 8
+                size_hint_y: None
+                height: self.minimum_height
+
+                Label:
+                    id: description_title
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    color: (0, 0, 0, 0.5)
+                    text: str(recipe_loader.loader.get_data_content('title')) + ':'
+                    font_size: 14
+                    padding: 20, 10
+                    bold: True
+                Label:
+                    id: description_txt
+                    size_hint: 1, None
+                    height: self.texture_size[1]
+                    halign: 'left'
+                    valign: 'top'
+                    color: (0, 0, 0, 0.35)
+                    text: str(recipe_loader.loader.get_data_content('description'))
+                    font_size: 13
+                    text_size: root.width, None
+                    padding_x: 40
+                Label:
+                    id: ingredients
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    color: (0, 0, 0, 0.5)
+                    text: 'Ingredients:'
+                    font_size: 14
+                    padding: 20, 8
+                    bold: True
+                Label:
+                    id: ingredients_txt
+                    size_hint: 1, None
+                    height: self.texture_size[1]
+                    halign: 'left'
+                    valign: 'top'
+                    color: (0, 0, 0, 0.35)
+                    text: recipe_loader.loader.get_from_list('ingredients', '-')
+                    font_size: 13
+                    text_size: root.width, None
+                    padding_x: 40
+                Label:
+                    id: preparing
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    color: (0, 0, 0, 0.5)
+                    text: 'Preparing:'
+                    font_size: 14
+                    padding: 20, 8
+                    bold: True
+                Label:
+                    id: preparing_txt
+                    size_hint: 1, None
+                    height: self.texture_size[1]
+                    halign: 'left'
+                    valign: 'top'
+                    color: (0, 0, 0, 0.35)
+                    text: str(recipe_loader.loader.get_from_list('preparing'))
+                    font_size: 13
+                    text_size: root.width, None
+                    padding_x: 40
+                Label:
+                    id: images
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                    color: (0, 0, 0, 0.5)
+                    text: 'Images:'
+                    font_size: 14
+                    padding: 20, 8
+                    bold: True
+                GridLayout:
+                    cols:2
+                    size_hint_y: None
+                    padding: 20, 20
+                    height: self.minimum_height
+
+                    Image:
+                        size_hint: 0.3, None
+                        source: './res/1.png'
+                    Image:
+                        size_hint: 0.3, None
+                        source: './res/2.png'
+            
+                    
+                    
+                    
+                        
+   

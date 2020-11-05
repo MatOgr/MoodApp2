@@ -296,19 +296,17 @@
                 Label:
                     text:'oc o chodzi...\n' * 100
                     color: (0,0,0,1)
-                    size_hint: 1, 1
+                    size_hint: 1, 0.5
                     height: self.texture_size[1]
                 Image:
                     source: './res/0.png'
                     size_hint: 0.5, 0.5
                     background_normal: ''
-                    pos_hint: {'x': 0.25, 'y': 0.1}
-                ButImg:
+                    pos_hint: {'x': 0.5, 'y': 0.1}
+                LabBut:
                     color: (1,1,1,0)
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                    background_normal: ''
-                    source: './res/0.png'
-                    size_hint: 0.7, 0.7
+                    background_normal: './res/0.png'
+                    size_hint_x: 0.3
                     on_press:
                         self.color = (1, 1, 1, 0.1)
                     on_release:

@@ -1,15 +1,10 @@
-import kivy
-from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.properties import ObjectProperty
-from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivymd.app import MDApp
+from kivy.lang.builder import Builder
+from kivy.uix.screenmanager import Screen, ScreenManager
+from kivymd.icon_definitions import md_icons
 from src.bcknd import Loader
-from kivy.config import Config
-from kivy.uix.image import AsyncImage
-from kivy.core.window import Window
+from kivy.uix.widget import Widget
 
-Config.set('graphics', 'resizable', True)
 
 
 class MyLoader(Widget):
@@ -20,29 +15,45 @@ class MyLoader(Widget):
         self.recipe.text = str(self.loader.site_data['description'])
 
 
-class MainWindow(Screen):
+class MenuScreen(Screen):
     pass
 
 
-class SecondWindow(Screen):
+class RecipeScreen(Screen):
     pass
 
 
-class ThirdWindow(Screen):
-    pass
+class MoodApp(MDApp):
+    data = {
+        'mdi-virus-outline': 'Get the recipe',
+        'mdi-facebook': 'Zaloguj przez Facebooka',
+    }
 
+    def __init__(self, **kwargs):
+        self.title = "MoodApp"
+        self.theme_cls.primary_palette = "Red"
+        super().__init__(**kwargs)
 
-class WindowManager(ScreenManager):
-    pass
-
-
-kv = Builder.load_file("mood.kv")
-
-
-class MoodApp(App):
     def build(self):
-        return kv
+        screen = Builder.load_file('main.kv')
+        return screen
 
 
-if __name__ == '__main__':
-    MoodApp().run()
+MoodApp().run()
+
+
+
+
+''' 
+do_scroll_y: True
+            BoxLayout:
+                size_hint_y: None
+                orientation: 'vertical'
+                height: self.minimum_height
+                pos_hint: {'top': 0.9}
+
+                Label:
+                    text: 'wonderfull life!\n' * 100
+                    color: (0,0,0,1)
+                    size: self.texture_size
+'''
