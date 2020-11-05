@@ -7,6 +7,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from src.bcknd import Loader
 from kivy.config import Config
 from kivy.uix.image import AsyncImage
+from kivy.core.window import Window
 
 Config.set('graphics', 'resizable', True)
 
@@ -24,6 +25,10 @@ class MainWindow(Screen):
 
 
 class SecondWindow(Screen):
+    pass
+
+
+class ThirdWindow(Screen):
     pass
 
 
