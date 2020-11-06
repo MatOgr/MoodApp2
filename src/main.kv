@@ -1,9 +1,30 @@
 ScreenManager:
-    RecipeScreen:
     MenuScreen:
+    RecipeScreen:
 
 <ButImg@ButtonBehavior+Image>:  
-<LabBut@ButtonBehavior+Label>:  
+<LabBut@ButtonBehavior+Label>:
+<P>:
+    id: pup
+    Label:
+        id: info
+        text: 'Czy chcesz zapisac obraz na urzadzeniu?'
+        size_hint: 0.6, None
+        pos_hint: {'center_x': 0.5, 'top': 0.8}
+        height: self.texture_size[1]
+        halign: 'center'
+        valign: 'middle'
+        text_size: self.size
+    Button:
+        text: 'Tak'
+        size_hint: 0.6, 0.2
+        pos_hint: {'center_x': 0.5, 'y': 0.1}
+        on_release:
+            info.text = app.loader.get_image(root.id, True)
+            self.disabled = True
+
+
+
 <MenuScreen>:
     name: 'menu'
     
@@ -18,7 +39,7 @@ ScreenManager:
 
          
         FloatLayout:
-            
+            id: pole
             ButImg:
                 id: guzik
                 color: (1,1,1,0.5)
@@ -52,18 +73,21 @@ ScreenManager:
                     root.manager.transition.direction = 'left'  
             
             MDFloatingActionButtonSpeedDial:
+                id: dial
                 rotation_root_button: True
                 data: app.data
                 bg_color_root_button: [250/255, 190/255, 34/255, 1]
                 bg_color_stack_button: [250/255, 190/255, 34/255, 1]
-                text_color: (1, 1, 1, 1)
-                pos_hint: {'center_x': 0.85, 'center_y': 0.1} 
+                color_icon_root_button: [1,1,1,1]
+                color_icon_stack_button: [1,1,1,1]
+                label_text_color: [1,1,1,1]
+                pos_hint: {'center_x': 0.85, 'center_y': 0.1}
+                callback:
+                    app.call
            
            
 <RecipeScreen>:
-    name: 'second'            
-    MyLoader: 
-        id: recipe_loader
+    name: 'second'
 
     BoxLayout:
         orientation: 'vertical'
@@ -74,7 +98,7 @@ ScreenManager:
             md_bg_color: app.theme_cls.primary_color
             background_palette: 'Primary'
             elevation: 10
-            left_action_items: [['arrow-left', lambda x: None]]
+            left_action_items: [['arrow-left', lambda x: app.go_main()]]
 
         ScrollView:
             do_scroll_x: False
@@ -94,7 +118,7 @@ ScreenManager:
                     valign: 'middle'
                     text_size: self.size
                     color: (0, 0, 0, 0.5)
-                    text: str(recipe_loader.loader.get_data_content('title')) + ':'
+                    text: str(app.loader.get_data_content('title')) + ':'
                     font_size: 14
                     padding: 20, 10
                     bold: True
@@ -105,7 +129,7 @@ ScreenManager:
                     halign: 'left'
                     valign: 'top'
                     color: (0, 0, 0, 0.35)
-                    text: str(recipe_loader.loader.get_data_content('description'))
+                    text: str(app.loader.get_data_content('description'))
                     font_size: 13
                     text_size: root.width, None
                     padding_x: 40
@@ -128,7 +152,7 @@ ScreenManager:
                     halign: 'left'
                     valign: 'top'
                     color: (0, 0, 0, 0.35)
-                    text: recipe_loader.loader.get_from_list('ingredients', '-')
+                    text: app.loader.get_from_list('ingredients', '-')
                     font_size: 13
                     text_size: root.width, None
                     padding_x: 40
@@ -151,7 +175,7 @@ ScreenManager:
                     halign: 'left'
                     valign: 'top'
                     color: (0, 0, 0, 0.35)
-                    text: str(recipe_loader.loader.get_from_list('preparing'))
+                    text: str(app.loader.get_from_list('preparing'))
                     font_size: 13
                     text_size: root.width, None
                     padding_x: 40
@@ -173,13 +197,22 @@ ScreenManager:
                     padding: 20, 20
                     height: self.minimum_height
 
-                    Image:
+                    ButImg:
                         size_hint: 0.3, None
                         source: './res/1.png'
-                    Image:
+                        on_press:
+                            self.opacity = 0.8
+                        on_release:
+                            self.opacity = 1
+                            app.show_popup(1)
+                    ButImg:
                         size_hint: 0.3, None
                         source: './res/2.png'
-            
+                        on_press:
+                            self.opacity = 0.8
+                        on_release:
+                            self.opacity = 1
+                            app.show_popup(2)
                     
                     
                     

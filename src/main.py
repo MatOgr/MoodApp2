@@ -1,15 +1,20 @@
+import os
+
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.popup import Popup
 from kivymd.app import MDApp
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import Screen, ScreenManager
-from kivymd.icon_definitions import md_icons
 from src.bcknd import Loader
 from kivy.uix.widget import Widget
-
+from kivy.utils import platform
 
 
 class MyLoader(Widget):
     url = 'https://moodup.team/test/info.php'
     loader = Loader(url)
+    if platform == 'android':
+        loader.SAVE_FOLDER = os.getenv('DIRECTORY_PICTURES')
 
     def show_recipe(self):
         self.recipe.text = str(self.loader.site_data['description'])
@@ -23,11 +28,21 @@ class RecipeScreen(Screen):
     pass
 
 
+class P(FloatLayout):
+    id = 0
+
+
 class MoodApp(MDApp):
+    url = 'https://moodup.team/test/info.php'
+    loader = Loader(url)
+    if platform == 'android':
+        loader.SAVE_FOLDER = os.getenv('DIRECTORY_PICTURES')
     data = {
-        'mdi-virus-outline': 'Get the recipe',
-        'mdi-facebook': 'Zaloguj przez Facebooka',
-    }
+        'campfire': 'Get the recipe',
+        'facebook': 'Zaloguj przez Facebooka'}
+
+    def show_recipe(self):
+        self.recipe.text = str(self.loader.site_data['description'])
 
     def __init__(self, **kwargs):
         self.title = "MoodApp"
@@ -38,22 +53,23 @@ class MoodApp(MDApp):
         screen = Builder.load_file('main.kv')
         return screen
 
+    def go_main(self):
+        self.root.current = 'menu'
+        self.root.transition.direction = 'right'
+
+    def show_popup(self, nr):
+        show = P()
+        P.id = nr
+        popupWindow = Popup(title='Zapisywanie obrazu %d' % nr,
+                            content=show,
+                            size_hint=(0.6, 0.4))
+        popupWindow.open()
+
+    def call(self, instance):
+        if instance.icon == 'campfire':
+            self.root.current = 'second'
+            instance.parent.close_stack()
+            self.root.transition.direction = 'left'
+
 
 MoodApp().run()
-
-
-
-
-''' 
-do_scroll_y: True
-            BoxLayout:
-                size_hint_y: None
-                orientation: 'vertical'
-                height: self.minimum_height
-                pos_hint: {'top': 0.9}
-
-                Label:
-                    text: 'wonderfull life!\n' * 100
-                    color: (0,0,0,1)
-                    size: self.texture_size
-'''
