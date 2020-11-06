@@ -40,37 +40,23 @@ ScreenManager:
          
         FloatLayout:
             id: pole
-            ButImg:
+            Image:
                 id: guzik
                 color: (1,1,1,0.5)
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                pos_hint: {'center_x': 0.5, 'center_y': 0.55}
                 background_normal: ''
                 source: './res/0.png'
                 size_hint: 0.7, 0.7
-                on_press:
-                    self.color = (1, 1, 1, 0.4)
-                    guzik_lab.opacity = 0.7
-                on_release:
-                    self.color = (1, 1, 1, 0.5)
-                    guzik_lab.opacity = 1
-                    app.root.current = 'second'
-                    root.manager.transition.direction = 'left'
-            LabBut:
+
+            Label:
                 id: guzik_lab
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                pos_hint: {'center_x': 0.5, 'center_y': 0.55}
                 size_hint: 0.5, 0.1
                 text: 'RecipeMaster!'
                 bold: True
                 font_size: 26
                 color: (0.165,0.165,0.165,0.95)
-                on_press:
-                    self.opacity = 0.8
-                    guzik.color = (1, 1, 1, 0.4)
-                on_release:
-                    self.opacity = 1
-                    guzik.color = (1, 1, 1, 0.5)
-                    app.root.current = 'second'
-                    root.manager.transition.direction = 'left'  
+
             
             MDFloatingActionButtonSpeedDial:
                 id: dial
